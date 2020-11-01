@@ -65,11 +65,15 @@ def next_id_from_request(data):
 def store_news(symbol, oldes_news):
     response = request_data(symbol)
     news_df = get_df_from_request(response)
+    print(f'{symbol}: Size of requested data: {news_df.shape[0]}')
+    print(f'{symbol}: Last date scraped: {news_df.iloc[-1]["date"]}')
 
     next_id = next_id_from_request(response)
     while (news_df.iloc[-1]['date'] > oldes_news):
         response = request_data(symbol, next_id)
-        news_df = news_df.append(get_df_from_request(response))
+        older_news_df = get_df_from_request(response)
+        print(f'{symbol}: Size of requested data: {older_news_df.shape[0]}')
+        news_df = news_df.append(older_news_df)
         next_id = next_id_from_request(response)
         print(f'{symbol}: Last date scraped: {news_df.iloc[-1]["date"]}')
     return news_df
@@ -80,6 +84,7 @@ def store_symbols_news(symbols, oldest_news_date, dir_name):
         print(f'Starting with {symbol}')
         file_name = f'{dir_name}/{symbol}.csv'
         news_df = store_news(symbol.lower(), args.date)
+        print(f'{symbol}: Total size of data: {news_df.shape[0]}')
         news_df.to_csv(file_name, index=True)
         print(f'{symbol}: Data stored in {file_name}')
 
