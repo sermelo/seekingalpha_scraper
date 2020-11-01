@@ -62,7 +62,7 @@ def get_df_from_request(data):
 def next_id_from_request(data):
     return data['meta']['page']['minmaxPublishOn']['min']
 
-def store_news(symbol, oldes_news, dir_name):
+def store_news(symbol, oldes_news):
     response = request_data(symbol)
     news_df = get_df_from_request(response)
 
@@ -72,8 +72,16 @@ def store_news(symbol, oldes_news, dir_name):
         news_df = news_df.append(get_df_from_request(response))
         next_id = next_id_from_request(response)
         print(f'{symbol}: Last date scraped: {news_df.iloc[-1]["date"]}')
-    news_df.to_csv(f'{dir_name}/{symbol}.csv', index=True)
     return news_df
+
+def store_symbols_news(symbols, oldest_news_date, dir_name):
+    for symbol in args.symbols:
+        symbol = symbol.lower()
+        print(f'Starting with {symbol}')
+        file_name = f'{dir_name}/{symbol}.csv'
+        news_df = store_news(symbol.lower(), args.date)
+        news_df.to_csv(file_name, index=True)
+        print(f'{symbol}: Data stored in {file_name}')
 
 parser = argparse.ArgumentParser(description='Scrape seeking alpha news.')
 parser.add_argument(
@@ -89,8 +97,6 @@ args = parser.parse_args()
 dir_name = time.strftime("%Y_%m_%d_%H_%M_%S")
 os.mkdir(dir_name)
 
-for symbol in args.symbols:
-    print(f'Starting with {symbol}')
-    store_news(symbol.lower(), args.date, dir_name)
+store_symbols_news(args.symbols, args.date, dir_name)
 
 print(f'Data of {args.symbols} have been saved in {dir_name}')
