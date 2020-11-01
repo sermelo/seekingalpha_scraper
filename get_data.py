@@ -24,7 +24,7 @@ def request_data(symbol, next_id=None):
     INITIAL_URL = 'https://seekingalpha.com/api/v3/symbols/{2}/news?cachebuster={0}&id={2}&include=author,primaryTickers,secondaryTickers,sentiments&isMounting=true&page[size]={1}'
     NEXT_URL = 'https://seekingalpha.com/api/v3/symbols/{2}/news?cachebuster={0}&filter[until]={3}&id={2}&include=author,primaryTickers,secondaryTickers,sentiments&isMounting=false&page[size]={1}'
     LAST_DATE = '2020-10-31'
-    PAGE_SIZE = 20
+    PAGE_SIZE = 25
     if next_id == None:
         url = INITIAL_URL.format(LAST_DATE, PAGE_SIZE, symbol)
     else:
