@@ -45,7 +45,7 @@ def get_df_from_request(data):
     news_data = data['data']
     for piece_of_news in news_data:
         parsed_data['id'].append(piece_of_news['id'])
-        parsed_data['date'].append(piece_of_news['attributes']['publishOn'])
+        parsed_data['date'].append(pd.to_datetime(piece_of_news['attributes']['publishOn'], utc=True))
         parsed_data['title'].append(piece_of_news['attributes']['title'])
         parsed_data['comments'].append(piece_of_news['attributes']['commentCount'])
     news_df = pd.DataFrame(parsed_data, columns = column_names)
