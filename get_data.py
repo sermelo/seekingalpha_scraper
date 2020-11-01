@@ -55,19 +55,22 @@ def get_df_from_request(data):
 def next_id_from_request(data):
     return data['meta']['page']['minmaxPublishOn']['min']
 
-def store_news(symbol, dir_name):
+def store_news(symbol, oldes_news, dir_name):
     response = request_data(symbol)
     news_df = get_df_from_request(response)
 
     next_id = next_id_from_request(response)
-    response = request_data(symbol, next_id)
-    news_df = news_df.append(get_df_from_request(response))
-    next_id = next_id_from_request(response)
+    while (news_df.iloc[-1]['date'] > oldes_news):
+        response = request_data(symbol, next_id)
+        news_df = news_df.append(get_df_from_request(response))
+        next_id = next_id_from_request(response)
+        print(f'Last date added: {news_df.iloc[-1]["date"]}')
     news_df.to_csv(f'{dir_name}/{symbol}.csv', index=True)
     return news_df
 
 symbol = 'aapl'
 dir_name = time.strftime("%Y_%m_%d_%H_%M_%S")
 os.mkdir(dir_name)
-store_news(symbol, dir_name)
+oldest_news = pd.to_datetime('2020-01-01', utc=True)
+store_news(symbol, oldest_news, dir_name)
 
