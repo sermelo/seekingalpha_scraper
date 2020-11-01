@@ -63,7 +63,6 @@ def next_id_from_request(data):
     return data['meta']['page']['minmaxPublishOn']['min']
 
 def store_news(symbol, oldes_news, dir_name):
-    print(f'Scrapping {symbol}')
     response = request_data(symbol)
     news_df = get_df_from_request(response)
 
@@ -91,6 +90,7 @@ dir_name = time.strftime("%Y_%m_%d_%H_%M_%S")
 os.mkdir(dir_name)
 
 for symbol in args.symbols:
-    store_news(symbol, args.date, dir_name)
+    print(f'Starting with {symbol}')
+    store_news(symbol.lower(), args.date, dir_name)
 
 print(f'Data of {args.symbols} have been saved in {dir_name}')
