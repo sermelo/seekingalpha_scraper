@@ -27,6 +27,8 @@ def request_data(symbol, next_id=None):
     done = False
     while not done:
         try:
+            ## Sleep added to be polite with web requests
+            # and randomized to try to avoid web scraping detection
             time.sleep(random.uniform(1, 4))
             response = do_request(url)
             done = True
