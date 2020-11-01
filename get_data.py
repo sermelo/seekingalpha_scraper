@@ -61,6 +61,7 @@ def next_id_from_request(data):
     return data['meta']['page']['minmaxPublishOn']['min']
 
 def store_news(symbol, oldes_news, dir_name):
+    print(f'Scrapping {symbol}')
     response = request_data(symbol)
     news_df = get_df_from_request(response)
 
@@ -69,7 +70,7 @@ def store_news(symbol, oldes_news, dir_name):
         response = request_data(symbol, next_id)
         news_df = news_df.append(get_df_from_request(response))
         next_id = next_id_from_request(response)
-        print(f'Last date added: {news_df.iloc[-1]["date"]}')
+        print(f'{symbol}: Last date scraped: {news_df.iloc[-1]["date"]}')
     news_df.to_csv(f'{dir_name}/{symbol}.csv', index=True)
     return news_df
 
