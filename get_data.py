@@ -67,7 +67,11 @@ def store_news(symbol, oldes_news):
 
     next_id = next_id_from_request(response)
     while (news_df.iloc[-1]['date'] > oldes_news):
-        response = request_data(symbol, next_id)
+        try:
+            response = request_data(symbol, next_id)
+        except Exception as err:
+            print(f'{symbol}: Error doing a request: {err.message}')
+            break
         older_news_df = get_df_from_request(response)
         print(f'{symbol}: Size of requested data: {older_news_df.shape[0]}')
         news_df = news_df.append(older_news_df)
