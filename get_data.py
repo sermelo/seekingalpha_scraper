@@ -18,13 +18,14 @@ def do_request(url):
     return data
 
 def request_data(symbol, next_id=None):
-    INITIAL_URL = 'https://seekingalpha.com/api/v3/symbols/{0}/news?cachebuster={1}&id={0}&include=author,primaryTickers,secondaryTickers,sentiments&isMounting=true&page[size]=20'
-    NEXT_URL = 'https://seekingalpha.com/api/v3/symbols/{0}/news?cachebuster={1}&filter[until]={2}&id={0}&include=author,primaryTickers,secondaryTickers,sentiments&isMounting=false&page[size]=20'
+    INITIAL_URL = 'https://seekingalpha.com/api/v3/symbols/{2}/news?cachebuster={0}&id={2}&include=author,primaryTickers,secondaryTickers,sentiments&isMounting=true&page[size]={1}'
+    NEXT_URL = 'https://seekingalpha.com/api/v3/symbols/{2}/news?cachebuster={0}&filter[until]={3}&id={2}&include=author,primaryTickers,secondaryTickers,sentiments&isMounting=false&page[size]={1}'
     LAST_DATE = '2020-10-31'
+    PAGE_SIZE = 20
     if next_id == None:
-        url = INITIAL_URL.format(symbol, LAST_DATE)
+        url = INITIAL_URL.format(LAST_DATE, PAGE_SIZE, symbol)
     else:
-        url = NEXT_URL.format(symbol, LAST_DATE, next_id)
+        url = NEXT_URL.format(LAST_DATE, PAGE_SIZE, symbol, next_id)
     done = False
     while not done:
         try:
