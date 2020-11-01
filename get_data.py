@@ -81,7 +81,7 @@ def store_symbols_news(symbols, oldest_news_date, dir_name):
     for symbol in args.symbols:
         symbol = symbol.lower()
         print(f'Starting with {symbol}')
-        file_name = f'{dir_name}/{symbol}.csv'
+        file_name = f'{dir_name}/{symbol}_news.csv'
         news_df = store_news(symbol.lower(), args.date)
         print(f'{symbol}: Total size of data: {news_df.shape[0]}')
         news_df.to_csv(file_name, index=True)
