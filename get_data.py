@@ -5,6 +5,7 @@ import pandas as pd
 import time
 import random
 import os
+import argparse
 
 def do_request(url):
     HEADERS = {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:80.0) Gecko/20100101 Firefox/80.0',
@@ -72,9 +73,12 @@ def store_news(symbol, oldes_news, dir_name):
     news_df.to_csv(f'{dir_name}/{symbol}.csv', index=True)
     return news_df
 
+parser = argparse.ArgumentParser(description='Scrape seeking alpha news.')
+parser.add_argument('--date', type=lambda s: pd.to_datetime(s, utc=True), required=True, help='Search data from now until this date. Format: YYYY-MM-DD')
+args = parser.parse_args()
+
 symbol = 'aapl'
 dir_name = time.strftime("%Y_%m_%d_%H_%M_%S")
 os.mkdir(dir_name)
-oldest_news = pd.to_datetime('2020-01-01', utc=True)
-store_news(symbol, oldest_news, dir_name)
+store_news(symbol, args.date, dir_name)
 
