@@ -69,7 +69,7 @@ def store_news(symbol, oldes_news):
         try:
             response = request_data(symbol, next_id)
         except Exception as err:
-            print(f'{symbol}: Error doing a request: {err.message}')
+            print(f'{symbol}: Error doing a request: {err}')
             break
         older_news_df = get_df_from_request(response)
         news_df = news_df.append(older_news_df)
