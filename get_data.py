@@ -62,7 +62,6 @@ def next_id_from_request(data):
 def store_news(symbol, oldes_news):
     response = request_data(symbol)
     news_df = get_df_from_request(response)
-    print(f'{symbol}: Size of requested data: {news_df.shape[0]}')
     print(f'{symbol}: Last date scraped: {news_df.iloc[-1]["date"]}')
 
     next_id = next_id_from_request(response)
@@ -73,7 +72,6 @@ def store_news(symbol, oldes_news):
             print(f'{symbol}: Error doing a request: {err.message}')
             break
         older_news_df = get_df_from_request(response)
-        print(f'{symbol}: Size of requested data: {older_news_df.shape[0]}')
         news_df = news_df.append(older_news_df)
         next_id = next_id_from_request(response)
         print(f'{symbol}: Last date scraped: {news_df.iloc[-1]["date"]}')
