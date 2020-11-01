@@ -38,6 +38,8 @@ def request_data(symbol, next_id=None):
             response = do_request(url)
             done = True
         except requests.HTTPError as err:
+            if err.response.status_code != 403:
+                raise
             print(f'HTTP error for symbol {symbol} and next_id {next_id}: {err}')
             print(url)
             print('Retrying')
