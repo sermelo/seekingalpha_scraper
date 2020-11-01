@@ -83,20 +83,22 @@ def store_symbols_news(symbols, oldest_news_date, dir_name):
         news_df.to_csv(file_name, index=True)
         print(f'{symbol}: Data stored in {file_name}')
 
-parser = argparse.ArgumentParser(description='Scrape seeking alpha news.')
-parser.add_argument(
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Scrape seeking alpha news.')
+    parser.add_argument(
         '-d', '--date',
         type=lambda s: pd.to_datetime(s, utc=True), required=True,
         help='Search data from now until this date. Format: YYYY-MM-DD')
-parser.add_argument(
+    parser.add_argument(
         '-s','--symbols',
         nargs='+', required=True,
         help='List of symbols to scrap')
-args = parser.parse_args()
+    args = parser.parse_args()
 
-dir_name = time.strftime("%Y_%m_%d_%H_%M_%S")
-os.mkdir(dir_name)
+    dir_name = time.strftime("%Y_%m_%d_%H_%M_%S")
+    os.mkdir(dir_name)
 
-store_symbols_news(args.symbols, args.date, dir_name)
+    store_symbols_news(args.symbols, args.date, dir_name)
 
-print(f'Data of {args.symbols} have been saved in {dir_name}')
+    print(f'Data of {args.symbols} have been saved in {dir_name}')
