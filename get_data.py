@@ -74,11 +74,20 @@ def store_news(symbol, oldes_news, dir_name):
     return news_df
 
 parser = argparse.ArgumentParser(description='Scrape seeking alpha news.')
-parser.add_argument('--date', type=lambda s: pd.to_datetime(s, utc=True), required=True, help='Search data from now until this date. Format: YYYY-MM-DD')
+parser.add_argument(
+        '-d', '--date',
+        type=lambda s: pd.to_datetime(s, utc=True), required=True,
+        help='Search data from now until this date. Format: YYYY-MM-DD')
+parser.add_argument(
+        '-s','--symbols',
+        nargs='+', required=True,
+        help='List of symbols to scrap')
 args = parser.parse_args()
 
-symbol = 'aapl'
 dir_name = time.strftime("%Y_%m_%d_%H_%M_%S")
 os.mkdir(dir_name)
-store_news(symbol, args.date, dir_name)
 
+for symbol in args.symbols:
+    store_news(symbol, args.date, dir_name)
+
+print(f'Data of {args.symbols} have been saved in {dir_name}')
