@@ -13,8 +13,6 @@ def do_request(url):
     response = requests.get(url, headers=HEADERS)
     response.raise_for_status()
     data = json.loads(response.text)
-#    news_data = data['data']
-#    next_id = data['meta']['page']['minmaxPublishOn']['min']
     return data
 
 def request_data(symbol, next_id=None):
