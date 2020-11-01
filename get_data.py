@@ -32,7 +32,7 @@ def request_data(symbol, next_id=None):
             time.sleep(random.uniform(1, 4))
             response = do_request(url)
             done = True
-        except HTTPError as err:
+        except requests.HTTPError as err:
             print(f'HTTP error for symbol {symbol} and next_id {next_id}: {err}')
             print(url)
             print('Retrying')
