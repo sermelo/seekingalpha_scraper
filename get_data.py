@@ -7,6 +7,11 @@ import random
 import os
 import argparse
 
+INITIAL_URL = 'https://seekingalpha.com/api/v3/symbols/{2}/news?cachebuster={0}&id={2}&include=author,primaryTickers,secondaryTickers,sentiments&isMounting=true&page[size]={1}'
+NEXT_URL = 'https://seekingalpha.com/api/v3/symbols/{2}/news?cachebuster={0}&filter[until]={3}&id={2}&include=author,primaryTickers,secondaryTickers,sentiments&isMounting=false&page[size]={1}'
+LAST_DATE = '2020-10-31'
+PAGE_SIZE = 25
+
 def do_request(url):
     HEADERS = {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:80.0) Gecko/20100101 Firefox/80.0',
                'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
@@ -21,10 +26,6 @@ def do_request(url):
     return data
 
 def request_data(symbol, next_id=None):
-    INITIAL_URL = 'https://seekingalpha.com/api/v3/symbols/{2}/news?cachebuster={0}&id={2}&include=author,primaryTickers,secondaryTickers,sentiments&isMounting=true&page[size]={1}'
-    NEXT_URL = 'https://seekingalpha.com/api/v3/symbols/{2}/news?cachebuster={0}&filter[until]={3}&id={2}&include=author,primaryTickers,secondaryTickers,sentiments&isMounting=false&page[size]={1}'
-    LAST_DATE = '2020-10-31'
-    PAGE_SIZE = 25
     if next_id == None:
         url = INITIAL_URL.format(LAST_DATE, PAGE_SIZE, symbol)
     else:
