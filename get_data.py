@@ -75,9 +75,12 @@ def store_news(symbol, oldest_news):
             print(f'{symbol}: Error doing a request: {err}')
             break
         older_news_df = get_df_from_request(response)
+        print(f'{symbol}: Number of new rows: {len(older_news_df.index)} until date scraped: {older_news_df.iloc[-1]["date"]}')
+        if len(older_news_df.index) < 25:
+            print(f'{symbol}: No more news found about this symbol')
+            break
         news_df = news_df.append(older_news_df)
         next_id = next_id_from_request(response)
-        print(f'{symbol}: Last date scraped: {news_df.iloc[-1]["date"]}')
     return news_df
 
 def store_symbols_news(symbols, oldest_news_date, dir_name):
