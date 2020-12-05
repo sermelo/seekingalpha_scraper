@@ -62,13 +62,13 @@ def get_df_from_request(data):
 def next_id_from_request(data):
     return data['meta']['page']['minmaxPublishOn']['min']
 
-def store_news(symbol, oldes_news):
+def store_news(symbol, oldest_news):
     response = request_data(symbol)
     news_df = get_df_from_request(response)
     print(f'{symbol}: Last date scraped: {news_df.iloc[-1]["date"]}')
 
     next_id = next_id_from_request(response)
-    while (news_df.iloc[-1]['date'] > oldes_news):
+    while (news_df.iloc[-1]['date'] > oldest_news):
         try:
             response = request_data(symbol, next_id)
         except Exception as err:
