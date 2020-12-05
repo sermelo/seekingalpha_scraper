@@ -6,10 +6,11 @@ import time
 import random
 import os
 import argparse
+from datetime import date
 
 INITIAL_URL = 'https://seekingalpha.com/api/v3/symbols/{2}/news?cachebuster={0}&id={2}&include=author,primaryTickers,secondaryTickers,sentiments&isMounting=true&page[size]={1}'
 NEXT_URL = 'https://seekingalpha.com/api/v3/symbols/{2}/news?cachebuster={0}&filter[until]={3}&id={2}&include=author,primaryTickers,secondaryTickers,sentiments&isMounting=false&page[size]={1}'
-LAST_DATE = '2020-10-31'
+LAST_DATE = date.today()strftime('%Y-%m-%d')
 PAGE_SIZE = 25
 
 def do_request(url):
