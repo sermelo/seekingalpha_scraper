@@ -1,0 +1,50 @@
+{
+	"Request Headers (3.722 KB)": {
+		"headers": [
+			{
+				"name": "Accept",
+				"value": "*/*"
+			},
+			{
+				"name": "Accept-Encoding",
+				"value": "gzip, deflate, br"
+			},
+			{
+				"name": "Accept-Language",
+				"value": "en-US,en;q=0.5"
+			},
+			{
+				"name": "Connection",
+				"value": "keep-alive"
+			},
+			{
+				"name": "Cookie",
+				"value": "a_very_vero_long_strign_here"
+			},
+			{
+				"name": "DNT",
+				"value": "1"
+			},
+			{
+				"name": "Host",
+				"value": "seekingalpha.com"
+			},
+			{
+				"name": "If-None-Match",
+				"value": "W/\"b2cb4b95a4d371fd979b2f323613bbbd\""
+			},
+			{
+				"name": "Referer",
+				"value": "https://seekingalpha.com/symbol/INTC/news?filter="
+			},
+			{
+				"name": "TE",
+				"value": "Trailers"
+			},
+			{
+				"name": "User-Agent",
+				"value": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:83.0) Gecko/20100101 Firefox/83.0"
+			}
+		]
+	}
+}
